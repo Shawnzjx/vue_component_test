@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App' //引入自定义组件
 
 // Vue.component('App',App) //注册全局组件
-Vue.config.productionTip = false //不显示不是开发环境的提示
 
 new Vue({
   //注册局部组件
