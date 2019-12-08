@@ -24,11 +24,25 @@ module.exports = { //配置对象  属性名
       {
         test: /\.js$/,
         //exclude: /(node_modules|bower_components)/, //不包含
-        include: path.resolve(__dirname, 'src'),  //只包含
+        include: path.resolve(__dirname, 'src'),  //只包含哪些文件处理
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            //预设包: 包含多个常用插件包的一个大包
+            presets: [ 
+              ['@babel/preset-env', {
+              useBuiltIns: 'usage',
+              'corejs': 2 // 处理一些新语法的实现
+              }]
+            ], 
+            //插件包
+            plugins: [
+              ['babel-plugin-component', {
+                "libraryName": "mint-ui", // 针对mint-ui库实现按需引入打包
+                "style": true // 自动打包对应的css
+              }]
+            ]
+            // Error: .plugins[0][1] must be an object, false, or undefined
           }
         }
       },
@@ -42,18 +56,19 @@ module.exports = { //配置对象  属性名
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 8000, //小于指定值进行base64 编码
+          limit: 8192, //小于指定值进行base64 编码
           name: 'static/img/[name].[hash:7].[ext]' // 相对于output.path
         }
       },
       // 处理 vue单文件 组件对象
       {
         test: /\.vue$/,
-        include: path.resolve(__dirname, 'src'),
+        // include: path.resolve(__dirname, 'src'),
         loader: 'vue-loader'
       }
     ]
   },
+
   //插件
   plugins: [
     new HtmlWebpackPlugin({
@@ -62,12 +77,16 @@ module.exports = { //配置对象  属性名
     }),
     new VueLoaderPlugin(),
   ],
+
   // 开发服务器的位置
   devServer: {
     port: 8200, // 自定端口号
     open: true, // 自动打开浏览器
-    quiet: true, // 不做太多日志输出
+    // quiet: true, // 不做太多日志输出
+    //代理
+    
   },
+
   //开启source-map调试  检测文件的错误
   devtool: 'cheap-module-eval-source-map',
   // 引入模块的解析

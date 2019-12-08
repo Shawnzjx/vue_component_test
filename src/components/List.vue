@@ -1,14 +1,22 @@
 <template>
   <ul class="todo-main">
-    <Item/>
-    <Item/>
-    <Item/>
+    <Item 
+      v-for="(todo, index) in todos" 
+      :key="todo.id"
+      :todo="todo"
+      :deleteTodo="deleteTodo"
+      :index="index"
+      :updateTodo="updateTodo"
+    />
   </ul>
 </template>
 
 <script type="text/ecmascript-6">
-  import List from './Item'
+  import Item from './Item'
   export default {
+
+    //声明接收属性(数组形式 只指定名称): 属性名  => 组件对象多了一个 todos属性
+    props:['todos','deleteTodo','updateTodo'],
 
     components:{
       Item
