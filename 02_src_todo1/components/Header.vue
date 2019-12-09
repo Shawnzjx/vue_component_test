@@ -10,6 +10,14 @@
 <script type="text/ecmascript-6">
 
   export default {
+   //声明接收属性  属性名 属性值的类型 属性的必要性
+   //更新数据函数的属性
+    props:{
+      addTodo:{
+        type:Function,
+        required:true, 
+      }
+    },
 
     data() {
       return {
@@ -30,10 +38,7 @@
           completed:false //新添加默认不勾选
         }
         //调用更新的函数,向todos中添加一个todo
-        // this.addTodo(todo)
-        //分发自定义事件: addTodo
-        this.$emit('addTodo',todo)
-
+        this.addTodo(todo)
         //清除输入
         this.title = ''
       }

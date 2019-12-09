@@ -1,39 +1,21 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" v-model="isCheckAll"/>
+      <!-- name  -string   用位置命名插槽 -->
+      <!-- <input type="checkbox" v-model="isCheckAll"/> -->
+      <slot name="left"/> 
     </label>
     <span>
-      <span>已完成{{completedSize}}</span> / 全部{{this.todos.length}}
+      <!-- <span>已完成{{completedSize}}</span> / 全部{{this.todos.length}} -->
+      <slot name="middle"/>
     </span>
-    <button class="btn btn-danger" v-show="completedSize>0" @click="clearCompletedTodo">清除已完成任务</button>
+    <!-- <button class="btn btn-danger" v-show="completedSize>0" @click="clearCompletedTodo">清除已完成任务</button> -->
+    <slot name="right"></slot>   
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
-
-    props: {
-      todos:Array,
-      clearCompletedTodo:Function,
-      checkAll:Function,
-    },
-
-    computed: {
-      completedSize(){
-        return this.todos.reduce((preTotal,todo,index)=> preTotal + (todo.completed?1:0),0)
-      },
-
-      isCheckAll:{
-        get(){
-          //读属性值就会自动调用对应的getter方法
-          return this.todos.length === this.completedSize && this.todos.length>0
-        },
-        set(value){ //value代表当前勾选状态的布尔值   监视checkAll
-          this.checkAll(value)
-        }
-      }
-    },
 
 
   }

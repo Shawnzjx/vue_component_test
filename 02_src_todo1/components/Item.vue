@@ -13,7 +13,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import PubSub from 'pubsub-js'
+
   export default {
     /*
       1. 绑定事件监听
@@ -24,6 +24,8 @@
     props:{
       todo:Object,
       index:Number,
+      deleteTodo:Function,
+      updateTodo:Function,
     },
 
     data() {
@@ -39,9 +41,7 @@
           return this.todo.completed
         },
         set(value){
-          // 发布消息
-          // this.updateTodo(this.todo,value)
-          PubSub.publish('updateTodo',{todo:this.todo,isCheck:value})
+          this.updateTodo(this.todo,value)
         }
       }
     },
@@ -60,9 +60,7 @@
       //删除的点击事件
       deleteItem(){
         if (window.confirm('确定要删除吗')) {
-          // this.deleteTodo(this.index)
-          //通过xx对象分发事件
-          this.$globalEvevntBus.$emit('deleteTodo',this.index)
+          this.deleteTodo(this.index)
         }
       }
     },
